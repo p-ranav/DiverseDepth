@@ -47,13 +47,13 @@ if __name__ == '__main__':
     # load checkpoint
     if test_args.load_ckpt:
         load_ckpt(test_args, model)
-    model.cuda()
+    # model.cuda()
     model = torch.nn.DataParallel(model)
 
     anno_path = './annotations.json' # add the path of annotations here, annotations contains the path to rgb and depth maps.
     base_path = os.path.dirname(os.path.dirname(anno_path))
-    f = open(anno_path, 'r')
-    annos = json.load(f)
+    with open(anno_path, 'r') as f:
+        annos = json.load(f)
 
     # test
     smoothed_absRel = SmoothedValue(test_datasize)

@@ -193,7 +193,7 @@ class fcn_topdown(nn.Module):
                 if m.bias is not None:
                     nn.init.constant_(m.bias, 0.0)
             elif isinstance(m, nn.BatchNorm2d):
-                nn.init.normal_(m.weight.data, 1.0, 0.0)
+                nn.init.normal_(m.weight.data, 1.0, 1e-3)
                 nn.init.constant_(m.bias.data, 0.0)
 
         for child_m in self.children():
