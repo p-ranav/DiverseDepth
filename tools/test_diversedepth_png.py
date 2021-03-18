@@ -68,23 +68,25 @@ if __name__ == '__main__':
     # model.cuda()
     model = torch.nn.DataParallel(model)
 
-    img_name = '07'
+    for i in ['10']:
 
-    # predict depth of a single pillow image
-    img = Image.open("/Users/pranav/Desktop/example_frames/" + img_name + ".png")  # any rgb pillow image
+      img_name = i
 
-    img_torch = scale_torch(img, 255)
-    img_torch = img_torch[np.newaxis, :]
-    print(img_torch.shape)
-    pred_depth, _ = model.module.depth_model(img_torch)
+      # predict depth of a single pillow image
+      img = Image.open("/Users/pranav/Desktop/example_frames/" + img_name + ".png")  # any rgb pillow image
 
-    print(pred_depth)
+      img_torch = scale_torch(img, 255)
+      img_torch = img_torch[np.newaxis, :]
+      print(img_torch.shape)
+      pred_depth, _ = model.module.depth_model(img_torch)
 
-    predicted_depth = pred_depth.detach().numpy() * 10
+      print(pred_depth)
 
-    print(predicted_depth.shape)
-    predicted_depth = predicted_depth.squeeze()
+      predicted_depth = pred_depth.detach().numpy() * 10
 
-    cv2.imshow('depth', colorize(predicted_depth))
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+      print(predicted_depth.shape)
+      predicted_depth = predicted_depth.squeeze()
+
+      cv2.imshow('depth', colorize(predicted_depth))
+      cv2.waitKey(0)
+      cv2.destroyAllWindows()
